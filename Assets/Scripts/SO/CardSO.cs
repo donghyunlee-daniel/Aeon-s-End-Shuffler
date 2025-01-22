@@ -4,7 +4,7 @@ using UnityEngine;
 public enum ECardType {Gem, Relic, Spell};
 
 // Enum for CardCost
-public enum ECardCost{c1, c2, c3, c4,c5,c6,c7,c8};
+public enum ECardCost{c0,c1, c2, c3, c4,c5,c6,c7,c8};
 
 [System.Serializable]
 public class Card
@@ -17,7 +17,7 @@ public class Card
     public Sprite image;
     
     // For game mode (Normal, 1.5x, 2.0x)
-    public int carNum;
+    public int cardNum;
 
 }
     
