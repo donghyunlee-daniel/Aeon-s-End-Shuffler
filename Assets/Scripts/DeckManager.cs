@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -15,6 +16,15 @@ public class DeckManager : MonoBehaviour
 
     [SerializeField]
     CardSO cardSO;
+    [SerializeField]
+    GameObject cardPrefab;
+
+    [SerializeField]
+    TMP_Text nameTMP;
+    [SerializeField]
+    TMP_Text typeTMP;
+    [SerializeField]
+    TMP_Text costTMP;
 
     const string URL = "https://docs.google.com/spreadsheets/d/1vTKQfIfWiSmaHZBsgp7q1rVpm4O8NUvD639-jLm60s4/export?format=tsv&range=A2:D9";
 
@@ -24,6 +34,13 @@ public class DeckManager : MonoBehaviour
     }
     private void OnDestroy() {
         cardSO.cards = null;
+    }
+
+    void Show()
+    {
+        nameTMP.text = cardList[0].name;
+        costTMP.text = cardList[0].eCarCost.ToString();
+        typeTMP.text = cardList[0].eCardType.ToString();
     }
 
    
@@ -122,6 +139,7 @@ public class DeckManager : MonoBehaviour
         }
 
         shuffleCardDeck(cardList);
+        Show();
     }
     
 
