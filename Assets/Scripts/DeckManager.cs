@@ -1,42 +1,68 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
 public class DeckManager : MonoBehaviour
 {
+    public static DeckManager Inst {get;private set;}
+    void Awake() => Inst = this;
+
+
+    // For Card deck
+    List<Card> cardList;
+
     [SerializeField]
     CardSO cardSO;
 
     const string URL = "https://docs.google.com/spreadsheets/d/1vTKQfIfWiSmaHZBsgp7q1rVpm4O8NUvD639-jLm60s4/export?format=tsv&range=A2:D9";
 
-    IEnumerator DownloadCardSO()
+    void Start()
     {
-        UnityWebRequest www = UnityWebRequest.Get(URL);
-        yield return www.SendWebRequest();
-
-        string data= www.downloadHandler.text;
-
-        SetCardSO(data);
-        
+        StartCoroutine(cardSetUp());
+    }
+    private void OnDestroy() {
+        cardSO.cards = null;
     }
 
-    void SetCardSO(string tsv)
+   
+
+    void shuffleCardDeck(List<Card> deck)
+    {
+        // Randomize the card order
+        for(int i=0; i < cardList.Count; i++)
+        {
+            int rand = Random.Range(i, cardList.Count);
+            Card temp = cardList[i];
+            cardList[i] = cardList[rand];
+            cardList[rand] = temp;
+        }
+    }
+
+    IEnumerator cardSetUp()
+    {
+        UnityWebRequest www = UnityWebRequest.Get(URL);
+            yield return www.SendWebRequest();
+            string data= www.downloadHandler.text;
+            SetCardDeck(data);
+    }
+
+    void SetCardDeck(string tsv)
     {
         string[] row = tsv.Split('\n');
         int rowSize = row.Length;
         int colSize = row[0].Split('\t').Length;
-
 
         // counter value for do-while loop
         int counter =0;
 
         //Initialize card list with the number of cards
         cardSO.cards = new Card[rowSize];
-        
+        cardList = new List<Card>();
         for(int i =0; i <rowSize; i++)
         {
             string[] col = row[i].Split('\t');
-
             do{
                 Card targetCard = new Card();
 
@@ -84,21 +110,20 @@ public class DeckManager : MonoBehaviour
                 // Assign description
                 targetCard.description = col[counter++];
                 
+                
+                // Assign cardNumb
+                targetCard.cardNum = 1;
 
                 // Add to the array
                 cardSO.cards[i] = targetCard;
+                cardList.Add(targetCard);
             }while(counter < colSize);
             counter =0;
         }
-    }
-    void Start()
-    {
-        StartCoroutine(DownloadCardSO());
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        shuffleCardDeck(cardList);
     }
+    
+
+    
 }

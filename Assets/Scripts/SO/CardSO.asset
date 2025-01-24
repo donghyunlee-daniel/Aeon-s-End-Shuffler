@@ -12,4 +12,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d08767442dc5ae74cadc9ecd386a33d5, type: 3}
   m_Name: CardSO
   m_EditorClassIdentifier: 
-  cards: []
+  cards:
+  - name: Unstable Pyrite
+    eCardType: 0
+    eCarCost: 2
+    description: "You may destroy this. If you do, gain an addtional 2\r"
+    image: {fileID: 0}
+    cardNum: 0
+  - name: Dread Diamond
+    eCardType: 0
+    eCarCost: 3
+    description: "You may discard a prepped spell. If you do, gain in additional
+      1\r"
+    image: {fileID: 0}
+    cardNum: 0
+  - name: Rip, Help!
+    eCardType: 1
+    eCarCost: 0
+    description: "Gain 1 charge\r"
+    image: {fileID: 0}
+    cardNum: 0
+  - name: Cat's Eye
+    eCardType: 1
+    eCarCost: 1
+    description: "Gain 1 charge. You may destroy this. If you do, gain 1\r"
+    image: {fileID: 0}
+    cardNum: 0
+  - name: Mage's Totem
+    eCardType: 1
+    eCarCost: 2
+    description: "Destroy this. Gravehold gains 1 life.\r"
+    image: {fileID: 0}
+    cardNum: 0
+  - name: Immolate
+    eCardType: 2
+    eCarCost: 0
+    description: "While prepped, when you suffer damage gain 1 charge. Cast: Deal
+      1 damage\r"
+    image: {fileID: 0}
+    cardNum: 0
+  - name: Nerve Jab
+    eCardType: 2
+    eCarCost: 2
+    description: "Cast: Deal 1 damage. Silence a minion.\r"
+    image: {fileID: 0}
+    cardNum: 0
+  - name: Leeching Agate
+    eCardType: 0
+    eCarCost: 3
+    description: When you gain this, gain 1 charge. Gain 2
+    image: {fileID: 0}
+    cardNum: 0
