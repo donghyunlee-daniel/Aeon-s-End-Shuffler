@@ -102,7 +102,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: name
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -185,6 +185,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4695252875882727431}
+  - component: {fileID: 1816242280029157075}
   m_Layer: 0
   m_Name: Card
   m_TagString: Untagged
@@ -211,6 +212,28 @@ Transform:
   - {fileID: 8556141182251673132}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1816242280029157075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3529852734941067697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37cf835cfa37c7b4c8d27092fa6da81a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameTMP: {fileID: 7966339749142714096}
+  costTMP: {fileID: 54699132475727252}
+  typeTMP: {fileID: 8923191811049666713}
+  item:
+    name: 
+    eCardType: 0
+    eCarCost: 0
+    description: 
+    image: {fileID: 0}
+    cardNum: 0
 --- !u!1 &7009270658484290798
 GameObject:
   m_ObjectHideFlags: 0
@@ -400,7 +423,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: cost
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -576,7 +599,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: type
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

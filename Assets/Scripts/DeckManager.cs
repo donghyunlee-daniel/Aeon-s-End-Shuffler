@@ -12,19 +12,13 @@ public class DeckManager : MonoBehaviour
 
 
     // For Card deck
-    List<Card> cardList;
+    List<Item> cardList;
 
     [SerializeField]
     CardSO cardSO;
     [SerializeField]
     GameObject cardPrefab;
 
-    [SerializeField]
-    TMP_Text nameTMP;
-    [SerializeField]
-    TMP_Text typeTMP;
-    [SerializeField]
-    TMP_Text costTMP;
 
     const string URL = "https://docs.google.com/spreadsheets/d/1vTKQfIfWiSmaHZBsgp7q1rVpm4O8NUvD639-jLm60s4/export?format=tsv&range=A2:D9";
 
@@ -33,24 +27,32 @@ public class DeckManager : MonoBehaviour
         cardSO.cards = null;
     }
 
-    void Show()
+    
+
+  
+
+    void GenerateCard()
     {
-        nameTMP.text = cardList[0].name;
-        costTMP.text = cardList[0].eCarCost.ToString();
-        typeTMP.text = cardList[0].eCardType.ToString();
+        var cardObject = Instantiate(cardPrefab, new Vector3(0f,0f,0f),Quaternion.identity);
+        var card = cardObject.GetComponent<Card>();
+        foreach(var cardItem in cardList)
+        {
+            card.Setup(cardItem);
+        }
+        // Able to instantiate  card from prefab. Need to instantiate as many as the size of carlist
     }
 
    
 
-    void shuffleCardDeck(List<Card> deck)
+    void shuffleCardDeck(List<Item> deck)
     {
         // Randomize the card order
-        for(int i=0; i < cardList.Count; i++)
+        for(int i=0; i < deck.Count; i++)
         {
-            int rand = Random.Range(i, cardList.Count);
-            Card temp = cardList[i];
-            cardList[i] = cardList[rand];
-            cardList[rand] = temp;
+            int rand = Random.Range(i, deck.Count);
+            Item temp = deck[i];
+            deck[i] = deck[rand];
+            deck[rand] = temp;
         }
     }
 
@@ -72,13 +74,13 @@ public class DeckManager : MonoBehaviour
         int counter =0;
 
         //Initialize card list with the number of cards
-        cardSO.cards = new Card[rowSize];
-        cardList = new List<Card>();
+        cardSO.cards = new Item[rowSize];
+        cardList = new List<Item>();
         for(int i =0; i <rowSize; i++)
         {
             string[] col = row[i].Split('\t');
             do{
-                Card targetCard = new Card();
+                Item targetCard = new Item();
 
                 // Assign name
                 targetCard.name = col[counter++];
@@ -134,9 +136,8 @@ public class DeckManager : MonoBehaviour
             }while(counter < colSize);
             counter =0;
         }
-
         shuffleCardDeck(cardList);
-        Show();
+        GenerateCard();
     }
     
 

@@ -7,7 +7,7 @@ public enum ECardType {Gem, Relic, Spell};
 public enum ECardCost{c0,c1, c2, c3, c4,c5,c6,c7,c8};
 
 [System.Serializable]
-public class Card
+public class Item
 {
     // Card info (name, type, cost, description, image)
     public string name;
@@ -25,5 +25,5 @@ public class Card
 [CreateAssetMenu(fileName = "CardSO", menuName = "Scriptable Objects/CardSO")]
 public class CardSO : ScriptableObject
 {
-    public Card[] cards;    
+    public Item[] cards;    
 }
