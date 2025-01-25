@@ -28,10 +28,7 @@ public class DeckManager : MonoBehaviour
 
     const string URL = "https://docs.google.com/spreadsheets/d/1vTKQfIfWiSmaHZBsgp7q1rVpm4O8NUvD639-jLm60s4/export?format=tsv&range=A2:D9";
 
-    void Start()
-    {
-        StartCoroutine(cardSetUp());
-    }
+ 
     private void OnDestroy() {
         cardSO.cards = null;
     }
@@ -57,7 +54,7 @@ public class DeckManager : MonoBehaviour
         }
     }
 
-    IEnumerator cardSetUp()
+    public IEnumerator cardSetUpCo()
     {
         UnityWebRequest www = UnityWebRequest.Get(URL);
             yield return www.SendWebRequest();
