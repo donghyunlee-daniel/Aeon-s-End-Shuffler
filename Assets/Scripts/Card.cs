@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ public class Card : MonoBehaviour
     public void Setup(Item item)
     {
         nameTMP.text = item.name;
-        costTMP.text = item.eCarCost.ToString();
+        costTMP.text = Array.IndexOf(Enum.GetValues(item.eCarCost.GetType()),item.eCarCost).ToString();
         typeTMP.text = item.eCardType.ToString();
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class DeckManager : MonoBehaviour
 {
@@ -33,11 +34,16 @@ public class DeckManager : MonoBehaviour
 
     void GenerateCard()
     {
-        var cardObject = Instantiate(cardPrefab, new Vector3(0f,0f,0f),Quaternion.identity);
-        var card = cardObject.GetComponent<Card>();
+        float yVal = 492f;
+        var imagePanel = cardPrefab.GetComponentInChildren<Image>();
+        var card= imagePanel.GetComponentInChildren<Card>();
+        
         foreach(var cardItem in cardList)
         {
+            var cardObject = Instantiate(imagePanel, new Vector3(0f,yVal,0f),Quaternion.identity);
+            
             card.Setup(cardItem);
+            yVal -= 90f;
         }
         // Able to instantiate  card from prefab. Need to instantiate as many as the size of carlist
     }
