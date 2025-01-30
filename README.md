@@ -26,5 +26,5 @@
   - UI Panel needs to have options to prompt user to choose game mode
  - Result Panel is needed (done)
  - Restart button is needed
- - ScrollView is needed
+ - ScrollView is  (done)
  

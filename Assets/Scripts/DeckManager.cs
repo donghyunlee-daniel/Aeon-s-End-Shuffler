@@ -20,9 +20,10 @@ public class DeckManager : MonoBehaviour
     CardSO cardSO;
     [SerializeField]
     GameObject cardPrefab;
+    public Transform parent;
 
 
-    const string URL = "https://docs.google.com/spreadsheets/d/1vTKQfIfWiSmaHZBsgp7q1rVpm4O8NUvD639-jLm60s4/export?format=tsv&range=A2:D9";
+    const string URL = "https://docs.google.com/spreadsheets/d/1vTKQfIfWiSmaHZBsgp7q1rVpm4O8NUvD639-jLm60s4/export?format=tsv&range=A2:D49";
 
  
     private void OnDestroy() {
@@ -37,13 +38,13 @@ public class DeckManager : MonoBehaviour
     {
         float yVal = 490f;     
         
-        
         foreach(var cardItem in cardList)
         {
             var cardObject = cardPrefab.transform.GetChild(0).gameObject;
             var rect = cardObject.GetComponent<RectTransform>();
             rect.anchoredPosition = new Vector3(0f,yVal,10f);
-            var temp = Instantiate(cardPrefab, new Vector3(0f,yVal,0f),Quaternion.identity);
+            //Instantiate(cardPrefab, new Vector3(0f,yVal,0f),Quaternion.identity);
+            Instantiate(cardObject,parent);
             var card = rect.GetComponent<Card>();
             card.Setup(cardItem);
             yVal -= 75f;
