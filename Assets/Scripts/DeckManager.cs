@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -34,18 +35,20 @@ public class DeckManager : MonoBehaviour
 
     void GenerateCard()
     {
-        float yVal = 492f;
-        var imagePanel = cardPrefab.GetComponentInChildren<Image>();
-        var card= imagePanel.GetComponentInChildren<Card>();
+        float yVal = 490f;     
+        
         
         foreach(var cardItem in cardList)
         {
-            var cardObject = Instantiate(imagePanel, new Vector3(0f,yVal,0f),Quaternion.identity);
-            
+            var cardObject = cardPrefab.transform.GetChild(0).gameObject;
+            var rect = cardObject.GetComponent<RectTransform>();
+            rect.anchoredPosition = new Vector3(0f,yVal,10f);
+            var temp = Instantiate(cardPrefab, new Vector3(0f,yVal,0f),Quaternion.identity);
+            var card = rect.GetComponent<Card>();
             card.Setup(cardItem);
-            yVal -= 90f;
+            yVal -= 75f;
         }
-        // Able to instantiate  card from prefab. Need to instantiate as many as the size of carlist
+        //Able to instantiate  card from prefab. Need to instantiate as many as the size of carlist
     }
 
    
