@@ -14,10 +14,8 @@ public class Item
     public ECardType eCardType;
     public ECardCost eCarCost;
     public string description;
-    public Sprite image;
     
-    // For game mode (Normal, 1.5x, 2.0x)
-    public int cardNum;
+    
 
 }
     

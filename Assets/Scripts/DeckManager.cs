@@ -14,7 +14,7 @@ public class DeckManager : MonoBehaviour
 
 
     // For Card deck
-    List<Item> cardList;
+    List<Item> gemList, spellList, relicList;
 
     [SerializeField]
     CardSO cardSO;
@@ -23,7 +23,7 @@ public class DeckManager : MonoBehaviour
     public Transform parent;
 
 
-    const string URL = "https://docs.google.com/spreadsheets/d/1vTKQfIfWiSmaHZBsgp7q1rVpm4O8NUvD639-jLm60s4/export?format=tsv&range=A2:D49";
+    const string URL = "https://docs.google.com/spreadsheets/d/1vTKQfIfWiSmaHZBsgp7q1rVpm4O8NUvD639-jLm60s4/export?format=tsv";
 
  
     private void OnDestroy() {
@@ -36,19 +36,18 @@ public class DeckManager : MonoBehaviour
 
     void GenerateCard()
     {
-        float yVal = 490f;     
+        // float yVal = 490f;     
         
-        foreach(var cardItem in cardList)
-        {
-            var cardObject = cardPrefab.transform.GetChild(0).gameObject;
-            var rect = cardObject.GetComponent<RectTransform>();
-            rect.anchoredPosition = new Vector3(0f,yVal,10f);
-            //Instantiate(cardPrefab, new Vector3(0f,yVal,0f),Quaternion.identity);
-            Instantiate(cardObject,parent);
-            var card = rect.GetComponent<Card>();
-            card.Setup(cardItem);
-            yVal -= 75f;
-        }
+        // foreach(var cardItem in cardList)
+        // {
+        //     var cardObject = cardPrefab.transform.GetChild(0).gameObject;
+        //     var rect = cardObject.GetComponent<RectTransform>();
+        //     rect.anchoredPosition = new Vector3(0f,yVal,10f);
+        //     Instantiate(cardObject,parent);
+        //     var card = rect.GetComponent<Card>();
+        //     card.Setup(cardItem);
+        //     yVal -= 75f;
+        // }
         //Able to instantiate  card from prefab. Need to instantiate as many as the size of carlist
     }
 
@@ -85,7 +84,9 @@ public class DeckManager : MonoBehaviour
 
         //Initialize card list with the number of cards
         cardSO.cards = new Item[rowSize];
-        cardList = new List<Item>();
+        gemList = new List<Item>();
+        relicList = new List<Item>();
+        spellList = new List<Item>();
         for(int i =0; i <rowSize; i++)
         {
             string[] col = row[i].Split('\t');
@@ -134,19 +135,31 @@ public class DeckManager : MonoBehaviour
                 }
 
                 // Assign description
-                targetCard.description = col[counter++];
+                targetCard.description = col[counter++]; 
                 
-                
-                // Assign cardNumb
-                targetCard.cardNum = 1;
-
+               
                 // Add to the array
                 cardSO.cards[i] = targetCard;
-                cardList.Add(targetCard);
+                switch(targetCard.eCardType.ToString())
+                {
+                    case "Gem" : gemList.Add(targetCard);
+                    break;
+                    case "Relic" : relicList.Add(targetCard);
+                    break;
+                    case "Spell" : spellList.Add(targetCard);
+                    break;
+                    default:
+                    break;
+                }
             }while(counter < colSize);
             counter =0;
         }
-        shuffleCardDeck(cardList);
+        shuffleCardDeck(gemList);
+        shuffleCardDeck(spellList);
+        shuffleCardDeck(relicList);
+        print(gemList.Count);
+        print(spellList.Count);
+        print(relicList.Count);
         GenerateCard();
     }
     

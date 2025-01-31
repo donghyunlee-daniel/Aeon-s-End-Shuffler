@@ -6,12 +6,12 @@
 
  ## Card setting
  - Set up properties with Card Info( name, type, cost, description, image) (done)
- - Image data still needs to be determined and assigned
  ## Supply Card Deck
  - Retrieve card data from Goole sheet (done)
  - Matching and assigning properties of Card class with retrieved data (done)
  - Fill the supply card deck with Cards (done)
  - Need to instantiate as many as the size of carlist (done)
+ - Make 3 different arrays for supply deck type
  - Generate number of cards based on Game Mode
  - Set up partial random shuffle based on Random cost mode
  - The ID for the extension version needs to be added, and apply to the 'SetCardSO'
