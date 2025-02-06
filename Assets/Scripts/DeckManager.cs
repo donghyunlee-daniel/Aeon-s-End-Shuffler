@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class DeckManager : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class DeckManager : MonoBehaviour
 
     const string URL = "https://docs.google.com/spreadsheets/d/1vTKQfIfWiSmaHZBsgp7q1rVpm4O8NUvD639-jLm60s4/export?format=tsv";
 
+    
 
     private void OnDestroy()
     {
@@ -36,7 +38,11 @@ public class DeckManager : MonoBehaviour
     // At the final UI, show users selected cards
     // Needed for panel. 
     
-    // Checkbox for boost mode
+    // TabView is needed
+
+    // Checkbox for boost mode (1.5 / 2.0)
+    // Boost mode for card Cost
+    // Input for the number of fixed card
     // 
 
 
@@ -181,9 +187,9 @@ public class DeckManager : MonoBehaviour
         shuffleCardDeck(gemList);
         shuffleCardDeck(spellList);
         shuffleCardDeck(relicList);
-        print(gemList.Count);
-        print(spellList.Count);
-        print(relicList.Count);
+        // print(gemList.Count);
+        // print(spellList.Count);
+        // print(relicList.Count);
         GenerateCard();
     }
 

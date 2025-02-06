@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
@@ -6,7 +7,7 @@ public class GameManager : MonoBehaviour
     void Awake() => Inst = this;
 
     [SerializeField]
-    TitlePanel titlePanel;
+    Startpanel startPanel;
 
     void Start()
     {
@@ -15,12 +16,13 @@ public class GameManager : MonoBehaviour
 
     void UISetup()
     {
-        titlePanel.Active(true);
+        startPanel.Active(true);
     }
 
     public void StartGame()
     {
         StartCoroutine(DeckManager.Inst.cardSetUpCo());
-
     }
+
+   
 }
