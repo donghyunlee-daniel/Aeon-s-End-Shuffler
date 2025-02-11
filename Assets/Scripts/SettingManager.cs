@@ -71,6 +71,7 @@ public class SettingManager : MonoBehaviour
             totalCard = (int)(totalCard * boost);
             tab1.transform.Find("CardNumSlider").GetComponent<Slider>().maxValue = totalCard;
             tab1.transform.Find("TotalCardNum_val").GetComponent<TMP_Text>().text = totalCard.ToString();
+            tab1.transform.Find("NotificationTxt").GetComponent<TMP_Text>().text = $"You will get {cardInput} of {cardCost}, and the rest({totalCard - cardInput} will be randomly generated)";
         }
         else if(check2.isOn)
         {
@@ -79,6 +80,7 @@ public class SettingManager : MonoBehaviour
             totalCard = (int)(totalCard * boost);
             tab1.transform.Find("CardNumSlider").GetComponent<Slider>().maxValue = totalCard;
             tab1.transform.Find("TotalCardNum_val").GetComponent<TMP_Text>().text = totalCard.ToString();
+            tab1.transform.Find("NotificationTxt").GetComponent<TMP_Text>().text = $"You will get {cardInput} of {cardCost}, and the rest({totalCard - cardInput} will be randomly generated)";
         }
         else
         {
@@ -86,12 +88,16 @@ public class SettingManager : MonoBehaviour
             boost = 1;
             tab1.transform.Find("CardNumSlider").GetComponent<Slider>().maxValue = totalCard;
             tab1.transform.Find("TotalCardNum_val").GetComponent<TMP_Text>().text = totalCard.ToString();
+            tab1.transform.Find("NotificationTxt").GetComponent<TMP_Text>().text = $"You will get {cardInput} of {cardCost}, and the rest({totalCard - cardInput} will be randomly generated)";
         }
     }
 
     public void SliderChange()
     {
         cardInput = (int)slider.value;
+        tab1.transform.Find("CardNumVal").GetComponent<TMP_Text>().text = cardInput.ToString();
+        tab1.transform.Find("NotificationTxt").GetComponent<TMP_Text>().text = $"You will get {cardInput} of {cardCost}, and the rest({totalCard - cardInput} will be randomly generated)";
     }
+    
 
 }

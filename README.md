@@ -17,14 +17,18 @@
  - The ID for the extension version needs to be added, and apply to the 'SetCardSO'
 
  ## Game Mode 
- - Funciton for boost version is needed ( 1.5x , 2.0x)
- - A shuffle funtion based on random cost mode is needed
- - Need to clarify about the discussion between users when the random cards are generated or before 
+ - Funciton for boost version is needed ( 1.5x , 2.0x) (done)
+ - A shuffle funtion based on random cost mode is needed 
+ - Need to clarify about the discussion between users when the random cards are generated or before (done)
  ## UI (GameMode, random cost, Extension Version, Result, Restart)
  - Game Start button is needed (done)
- - 'Start' needs to be replaced with 'Restart' or 'Shuffle' after the game starts
-  - UI Panel needs to have options to prompt user to choose game mode
+ - After press 'Save' button, another setting panel for the other cardType needs to be showed up
+ - UI Panel needs to have options to prompt user to choose game mode (done)
  - Result Panel is needed (done)
  - Restart button is needed
- - ScrollView is  (done)
+ - ScrollView is needeed (done)
+ - Final View is needed with the sorted array
+ - A value indicator is needed for the slider
  
+ ## Workflow
+ - Relic -> Spell -> Gem -> Relic result -> Spell result -> Gem result -> Final result
