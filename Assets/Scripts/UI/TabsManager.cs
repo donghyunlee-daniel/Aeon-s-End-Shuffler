@@ -11,6 +11,7 @@ public class TabsManager : MonoBehaviour
 
     public void SwitchToTab(int TabID)
     {
+        
         foreach (GameObject temp in Tabs)
         {
             temp.SetActive(false);
