@@ -16,12 +16,15 @@ public class SettingManager : MonoBehaviour
 
     [SerializeField]
     GameObject tab3;
-    
+
     [SerializeField]
     GameObject notification;
 
     [SerializeField]
     Button saveBtn;
+
+
+
 
     // Awake -> instantiate each setting values
     // Start -> Add Listener
@@ -44,33 +47,43 @@ public class SettingManager : MonoBehaviour
 
     void Start()
     {
-        relic_check1.onValueChanged.AddListener(delegate {RelicToggleClick(); });
-        relic_check2.onValueChanged.AddListener(delegate {RelicToggleClick();});
-        relic_slider.onValueChanged.AddListener(delegate {RelicSliderChange();});
+        relic_check1.onValueChanged.AddListener(delegate { RelicToggleClick(); });
+        relic_check2.onValueChanged.AddListener(delegate { RelicToggleClick(); });
+        relic_slider.onValueChanged.AddListener(delegate { RelicSliderChange(); });
     }
 
-  
+
 
 
     void StartSetup(GameObject tab)
     {
-        if (tab.name == "Tab1_Relic")
+        switch (tab.name)
         {
-            relic_check1 = tab.transform.Find("BoostToggleGroup").transform.Find("1.5CheckBox").GetComponent<Toggle>();
-            relic_check2 = tab.transform.Find("BoostToggleGroup").transform.Find("2.0CheckBox").GetComponent<Toggle>();
-            relic_slider = tab.transform.Find("CardNumSlider").GetComponent<Slider>();
-        }
-        if (tab.name == "Tab2_Spell")
-        {
-            spell_check1 = tab.transform.Find("BoostToggleGroup").transform.Find("1.5CheckBox").GetComponent<Toggle>();
-            spell_check2 = tab.transform.Find("BoostToggleGroup").transform.Find("2.0CheckBox").GetComponent<Toggle>();
-        }
-        if (tab.name == "Tab3_Gem")
-        {
-            gem_check1 = tab.transform.Find("BoostToggleGroup").transform.Find("1.5CheckBox").GetComponent<Toggle>();
-            gem_check2 = tab.transform.Find("BoostToggleGroup").transform.Find("2.0CheckBox").GetComponent<Toggle>();
-        }
+            case "Tab1_Relic":
+                {
+                    relic_check1 = tab.transform.Find("BoostToggleGroup").transform.Find("1.5CheckBox").GetComponent<Toggle>();
+                    relic_check2 = tab.transform.Find("BoostToggleGroup").transform.Find("2.0CheckBox").GetComponent<Toggle>();
+                    relic_slider = tab.transform.Find("CardNumSlider").GetComponent<Slider>();
+                }
+                break;
+            case "Tab2_Spell":
+                {
+                    spell_check1 = tab.transform.Find("BoostToggleGroup").transform.Find("1.5CheckBox").GetComponent<Toggle>();
+                    spell_check2 = tab.transform.Find("BoostToggleGroup").transform.Find("2.0CheckBox").GetComponent<Toggle>();
+                    spell_slider = tab.transform.Find("CardNumSlider").GetComponent<Slider>();
+                }
+                break;
 
+            case "Tab3_Gem":
+                {
+                    gem_check1 = tab.transform.Find("BoostToggleGroup").transform.Find("1.5CheckBox").GetComponent<Toggle>();
+                    gem_check2 = tab.transform.Find("BoostToggleGroup").transform.Find("2.0CheckBox").GetComponent<Toggle>();
+                    gem_slider = tab.transform.Find("CardNumSlider").GetComponent<Slider>();
+                }
+                break;
+            default:
+                break;
+        }
 
     }
 
@@ -114,21 +127,21 @@ public class SettingManager : MonoBehaviour
         // Setting for cardCost
         int counter = 0;
         Toggle[] cToggleArray = tab1.transform.Find("CostToggleGroup").GetComponentsInChildren<Toggle>();
-        foreach(Toggle toggle in cToggleArray)
+        foreach (Toggle toggle in cToggleArray)
         {
-            if(toggle.isOn == true)
-                {
-                    relic_cardCost = (ECardCost)Enum.GetValues(relic_cardCost.GetType()).GetValue(counter);
-                }
+            if (toggle.isOn == true)
+            {
+                relic_cardCost = (ECardCost)Enum.GetValues(relic_cardCost.GetType()).GetValue(counter);
+            }
             counter++;
         }
     }
 
-      public void btnSave()
+    public void btnSave()
     {
         RelictCardCostChange();
-        notification.transform.Find("NotificationTxt").GetComponent<TMP_Text>().text 
-        = $"You will get {relic_cardChoose} {relic_cardCost} card(s) and the rest({relic_totalCard-relic_cardChoose}) will be randomly generated";
+        notification.transform.Find("NotificationTxt").GetComponent<TMP_Text>().text
+        = $"You will get {relic_cardChoose} {relic_cardCost} card(s) and the rest({relic_totalCard - relic_cardChoose}) will be randomly generated";
         notification.SetActive(true);
         saveBtn.gameObject.SetActive(false);
     }
@@ -141,7 +154,10 @@ public class SettingManager : MonoBehaviour
 
     public void btnNext()
     {
-        
+        TabsManager.Inst.SwitchToTab(TabsManager.Inst.currentTabID + 1);
+        notification.SetActive(false);
+        saveBtn.gameObject.SetActive(true);
+        Debug.Log($"{relic_boost}, {relic_totalCard}, {relic_cardCost}, {relic_cardChoose}");
     }
 
 
