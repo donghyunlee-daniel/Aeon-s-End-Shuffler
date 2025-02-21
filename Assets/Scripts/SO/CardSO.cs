@@ -1,10 +1,10 @@
 using UnityEngine;
 
 // Enum for CardType
-public enum ECardType {Gem, Relic, Spell};
+public enum ECardType { Gem, Relic, Spell };
 
 // Enum for CardCost
-public enum ECardCost{c0,c1, c2, c3, c4,c5,c6,c7,c8};
+public enum ECardCost { RANDOM, C0, C1, C2, C3, C4, C5, C6, C7, C8 };
 
 [System.Serializable]
 public class Item
@@ -14,14 +14,14 @@ public class Item
     public ECardType eCardType;
     public ECardCost eCarCost;
     public string description;
-    
-    
+
+
 
 }
-    
+
 
 [CreateAssetMenu(fileName = "CardSO", menuName = "Scriptable Objects/CardSO")]
 public class CardSO : ScriptableObject
 {
-    public Item[] cards;    
+    public Item[] cards;
 }

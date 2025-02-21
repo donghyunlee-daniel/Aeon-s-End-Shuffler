@@ -32,3 +32,6 @@
  
  ## Workflow
  - Relic -> Spell -> Gem -> Relic result -> Spell result -> Gem result -> Final result
+
+ ## Needs to be improved
+ - When cardcost is clicked, card choose should be default to 1

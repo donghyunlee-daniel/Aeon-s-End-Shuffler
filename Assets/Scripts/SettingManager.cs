@@ -23,6 +23,9 @@ public class SettingManager : MonoBehaviour
     [SerializeField]
     Button saveBtn;
 
+    [SerializeField]
+    GameObject tabMenu;
+
 
 
 
@@ -33,7 +36,7 @@ public class SettingManager : MonoBehaviour
     // variables for Setting data
     float relic_boost, spell_boost, gem_boost;
     ECardCost relic_cardCost, spell_cardCost, gem_cardCost;
-    int relic_cardChoose, relic_totalCard, spell_cardChoose, spell_totalCrad, gem_cardChoose, gem_totalCard;
+    int relic_cardChoose, relic_totalCard, spell_cardChoose, spell_totalCard, gem_cardChoose, gem_totalCard;
 
     Toggle relic_check1, relic_check2, spell_check1, spell_check2, gem_check1, gem_check2;
     Slider relic_slider, spell_slider, gem_slider;
@@ -41,15 +44,22 @@ public class SettingManager : MonoBehaviour
     void Awake()
     {
         StartSetup(tab1);
-        //StartSetup(tab2);
-        //StartSetup(tab3);       
+        StartSetup(tab2);
+        StartSetup(tab3);
     }
 
     void Start()
     {
-        relic_check1.onValueChanged.AddListener(delegate { RelicToggleClick(); });
-        relic_check2.onValueChanged.AddListener(delegate { RelicToggleClick(); });
-        relic_slider.onValueChanged.AddListener(delegate { RelicSliderChange(); });
+        relic_check1.onValueChanged.AddListener(delegate { ToggleClick(tab1); });
+        relic_check2.onValueChanged.AddListener(delegate { ToggleClick(tab1); });
+        relic_slider.onValueChanged.AddListener(delegate { SliderChange(tab1); });
+        spell_check1.onValueChanged.AddListener(delegate { ToggleClick(tab2); });
+        spell_check2.onValueChanged.AddListener(delegate { ToggleClick(tab2); });
+        spell_slider.onValueChanged.AddListener(delegate { SliderChange(tab2); });
+        gem_check1.onValueChanged.AddListener(delegate { ToggleClick(tab3); });
+        gem_check2.onValueChanged.AddListener(delegate { ToggleClick(tab3); });
+        gem_slider.onValueChanged.AddListener(delegate { SliderChange(tab3); });
+
     }
 
 
@@ -87,65 +97,252 @@ public class SettingManager : MonoBehaviour
 
     }
 
-    public void RelicToggleClick()
+    void BoostModeOn(GameObject tab, Toggle check1, Toggle check2)
     {
-        if (relic_check1.isOn)
+        switch (tab.name)
         {
-            relic_totalCard = 3;
-            relic_boost = 1.5f;
-            relic_totalCard = (int)(relic_totalCard * relic_boost);
-            relic_slider.maxValue = relic_totalCard;
-            tab1.transform.Find("TotalCardNum_val").GetComponent<TMP_Text>().text = relic_totalCard.ToString();
-        }
-        else if (relic_check2.isOn)
-        {
-            relic_totalCard = 3;
-            relic_boost = 2.0f;
-            relic_totalCard = (int)(relic_totalCard * relic_boost);
-            relic_slider.maxValue = relic_totalCard;
-            tab1.transform.Find("TotalCardNum_val").GetComponent<TMP_Text>().text = relic_totalCard.ToString();
-        }
-        else
-        {
-            relic_totalCard = 3;
-            relic_boost = 1;
-            relic_slider.maxValue = relic_totalCard;
-            tab1.transform.Find("TotalCardNum_val").GetComponent<TMP_Text>().text = relic_totalCard.ToString();
+            case "Tab1_Relic":
+                {
+                    if (check1.isOn)
+                    {
+                        relic_totalCard = 2;
+                        relic_boost = 1.5f;
+                        relic_totalCard = (int)(relic_totalCard * relic_boost);
+                        relic_slider.maxValue = relic_totalCard;
+                        tab.transform.Find("TotalCardNum_val").GetComponent<TMP_Text>().text = relic_totalCard.ToString();
+                    }
+                    else if (check2.isOn)
+                    {
+                        relic_totalCard = 2;
+                        relic_boost = 2.0f;
+                        relic_totalCard = (int)(relic_totalCard * relic_boost);
+                        relic_slider.maxValue = relic_totalCard;
+                        tab.transform.Find("TotalCardNum_val").GetComponent<TMP_Text>().text = relic_totalCard.ToString();
+                    }
+                    else
+                    {
+                        relic_totalCard = 2;
+                        relic_boost = 1;
+                        relic_slider.maxValue = relic_totalCard;
+                        tab.transform.Find("TotalCardNum_val").GetComponent<TMP_Text>().text = relic_totalCard.ToString();
+                    }
+                }
+                break;
+            case "Tab2_Spell":
+                {
+                    if (check1.isOn)
+                    {
+                        spell_totalCard = 4;
+                        spell_boost = 1.5f;
+                        spell_totalCard = (int)(spell_totalCard * spell_boost);
+                        spell_slider.maxValue = spell_totalCard;
+                        tab.transform.Find("TotalCardNum_val").GetComponent<TMP_Text>().text = spell_totalCard.ToString();
+                    }
+                    else if (check2.isOn)
+                    {
+                        spell_totalCard = 4;
+                        spell_boost = 2.0f;
+                        spell_totalCard = (int)(spell_totalCard * spell_boost);
+                        spell_slider.maxValue = spell_totalCard;
+                        tab.transform.Find("TotalCardNum_val").GetComponent<TMP_Text>().text = spell_totalCard.ToString();
+                    }
+                    else
+                    {
+                        spell_totalCard = 4;
+                        spell_boost = 1;
+                        spell_slider.maxValue = spell_totalCard;
+                        tab.transform.Find("TotalCardNum_val").GetComponent<TMP_Text>().text = spell_totalCard.ToString();
+                    }
+                }
+                break;
+
+            case "Tab3_Gem":
+                {
+                    if (check1.isOn)
+                    {
+                        gem_totalCard = 3;
+                        gem_boost = 1.5f;
+                        gem_totalCard = (int)(gem_totalCard * gem_boost);
+                        gem_slider.maxValue = gem_totalCard;
+                        tab.transform.Find("TotalCardNum_val").GetComponent<TMP_Text>().text = gem_totalCard.ToString();
+                    }
+                    else if (check2.isOn)
+                    {
+                        gem_totalCard = 3;
+                        gem_boost = 2.0f;
+                        gem_totalCard = (int)(gem_totalCard * gem_boost);
+                        gem_slider.maxValue = gem_totalCard;
+                        tab.transform.Find("TotalCardNum_val").GetComponent<TMP_Text>().text = gem_totalCard.ToString();
+                    }
+                    else
+                    {
+                        gem_totalCard = 3;
+                        gem_boost = 1;
+                        gem_slider.maxValue = gem_totalCard;
+                        tab.transform.Find("TotalCardNum_val").GetComponent<TMP_Text>().text = gem_totalCard.ToString();
+                    }
+                }
+                break;
+            default:
+                break;
         }
     }
-
-    public void RelicSliderChange()
+    public void ToggleClick(GameObject tab)
     {
-        relic_cardChoose = (int)relic_slider.value;
-        tab1.transform.Find("CardNumVal").GetComponent<TMP_Text>().text = relic_cardChoose.ToString();
+        Toggle check1 = tab.transform.Find("BoostToggleGroup").transform.Find("1.5CheckBox").GetComponent<Toggle>();
+        Toggle check2 = tab.transform.Find("BoostToggleGroup").transform.Find("2.0CheckBox").GetComponent<Toggle>();
+
+        BoostModeOn(tab, check1, check2);
+
 
     }
 
-    public void RelictCardCostChange()
+    public void SliderChange(GameObject tab)
     {
 
-        // Setting for cardCost
-        int counter = 0;
-        Toggle[] cToggleArray = tab1.transform.Find("CostToggleGroup").GetComponentsInChildren<Toggle>();
-        foreach (Toggle toggle in cToggleArray)
+        switch (tab.name)
         {
-            if (toggle.isOn == true)
-            {
-                relic_cardCost = (ECardCost)Enum.GetValues(relic_cardCost.GetType()).GetValue(counter);
-            }
-            counter++;
+            case "Tab1_Relic":
+                {
+                    relic_cardChoose = (int)relic_slider.value;
+                    tab.transform.Find("CardNumVal").GetComponent<TMP_Text>().text = relic_cardChoose.ToString();
+                }
+                break;
+            case "Tab2_Spell":
+                {
+                    spell_cardChoose = (int)spell_slider.value;
+                    tab.transform.Find("CardNumVal").GetComponent<TMP_Text>().text = spell_cardChoose.ToString();
+                }
+                break;
+
+            case "Tab3_Gem":
+                {
+                    gem_cardChoose = (int)gem_slider.value;
+                    tab.transform.Find("CardNumVal").GetComponent<TMP_Text>().text = gem_cardChoose.ToString();
+                }
+                break;
+            default:
+                break;
         }
+
     }
 
-    public void btnSave()
+    public void CardCostChange(GameObject tab)
     {
-        RelictCardCostChange();
-        notification.transform.Find("NotificationTxt").GetComponent<TMP_Text>().text
-        = $"You will get {relic_cardChoose} {relic_cardCost} card(s) and the rest({relic_totalCard - relic_cardChoose}) will be randomly generated";
-        notification.SetActive(true);
-        saveBtn.gameObject.SetActive(false);
+        switch (tab.name)
+        {
+            case "Tab1_Relic":
+                {
+                    // Setting for cardCost
+                    int counter = 1;
+                    bool hasCostVal = false;
+                    Toggle[] cToggleArray = tab.transform.Find("CostToggleGroup").GetComponentsInChildren<Toggle>();
+                    foreach (Toggle toggle in cToggleArray)
+                    {
+                        if (toggle.isOn == true)
+                        {
+                            relic_cardCost = (ECardCost)Enum.GetValues(relic_cardCost.GetType()).GetValue(counter);
+                            hasCostVal = true;
+                        }
+                        counter++;
+                    }
+                    if (hasCostVal == false)
+                    {
+                        relic_cardCost = (ECardCost)Enum.GetValues(relic_cardCost.GetType()).GetValue(0);
+                    }
+
+                }
+                break;
+            case "Tab2_Spell":
+                {
+                    // Setting for cardCost
+                    int counter = 1;
+                    bool hasCostVal = false;
+                    Toggle[] cToggleArray = tab.transform.Find("CostToggleGroup").GetComponentsInChildren<Toggle>();
+                    foreach (Toggle toggle in cToggleArray)
+                    {
+                        if (toggle.isOn == true)
+                        {
+                            spell_cardCost = (ECardCost)Enum.GetValues(spell_cardCost.GetType()).GetValue(counter);
+                            hasCostVal = true;
+                        }
+
+                        counter++;
+                    }
+                    if (hasCostVal == false)
+                    {
+                        spell_cardCost = (ECardCost)Enum.GetValues(spell_cardCost.GetType()).GetValue(0);
+                    }
+                }
+                break;
+
+            case "Tab3_Gem":
+                {
+                    // Setting for cardCost
+                    int counter = 1;
+                    bool hasCostVal = false;
+                    Toggle[] cToggleArray = tab.transform.Find("CostToggleGroup").GetComponentsInChildren<Toggle>();
+                    foreach (Toggle toggle in cToggleArray)
+                    {
+                        if (toggle.isOn == true)
+                        {
+                            gem_cardCost = (ECardCost)Enum.GetValues(gem_cardCost.GetType()).GetValue(counter);
+                            hasCostVal = true;
+                        }
+
+                        counter++;
+                    }
+                    if (hasCostVal == false)
+                    {
+                        gem_cardCost = (ECardCost)Enum.GetValues(gem_cardCost.GetType()).GetValue(0);
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+
+
     }
 
+    public void btnSave(GameObject tab)
+    {
+        switch (tab.name)
+        {
+            case "Tab1_Relic":
+                {
+                    CardCostChange(tab);
+                    notification.transform.Find("NotificationTxt").GetComponent<TMP_Text>().text
+                    = $"{relic_cardChoose} of your RELIC card(s) will be {relic_cardCost}, and the rest ({relic_totalCard - relic_cardChoose}) will be randomly generated";
+                    notification.SetActive(true);
+                    tab.transform.Find("SaveBtn").gameObject.SetActive(false);
+                }
+                break;
+            case "Tab2_Spell":
+                {
+                    CardCostChange(tab);
+                    notification.transform.Find("NotificationTxt").GetComponent<TMP_Text>().text
+                    = $"{spell_cardChoose} of your SPELL card(s) will be {spell_cardCost}, and the rest ({spell_totalCard - spell_cardChoose}) will be randomly generated";
+                    notification.SetActive(true);
+                    tab.transform.Find("SaveBtn").gameObject.SetActive(false);
+                }
+                break;
+
+            case "Tab3_Gem":
+                {
+                    CardCostChange(tab);
+                    notification.transform.Find("NotificationTxt").GetComponent<TMP_Text>().text
+                    = $"{gem_cardChoose} of your GEM card(s) will be {gem_cardCost}, and the rest ({gem_totalCard - gem_cardChoose}) will be randomly generated";
+                    notification.SetActive(true);
+                    tab.transform.Find("SaveBtn").gameObject.SetActive(false);
+                }
+                break;
+            default:
+                break;
+        }
+
+    }
+    // Save buttons and Next buttons doesn't pop up properly in each tab
     public void btnCancel()
     {
         notification.SetActive(false);
@@ -154,10 +351,18 @@ public class SettingManager : MonoBehaviour
 
     public void btnNext()
     {
-        TabsManager.Inst.SwitchToTab(TabsManager.Inst.currentTabID + 1);
-        notification.SetActive(false);
-        saveBtn.gameObject.SetActive(true);
-        Debug.Log($"{relic_boost}, {relic_totalCard}, {relic_cardCost}, {relic_cardChoose}");
+        if (TabsManager.Inst.currentTabID == 2)
+        {
+            notification.SetActive(false);
+            tabMenu.SetActive(false);
+        }
+        else
+        {
+            TabsManager.Inst.SwitchToTab(TabsManager.Inst.currentTabID + 1);
+            notification.SetActive(false);
+            saveBtn.gameObject.SetActive(true);
+        }
+
     }
 
 

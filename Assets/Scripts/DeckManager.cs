@@ -131,31 +131,31 @@ public class DeckManager : MonoBehaviour
                 switch (col[counter++].ToString())
                 {
                     case "0":
-                        targetCard.eCarCost = ECardCost.c0;
+                        targetCard.eCarCost = ECardCost.C0;
                         break;
                     case "1":
-                        targetCard.eCarCost = ECardCost.c1;
+                        targetCard.eCarCost = ECardCost.C1;
                         break;
                     case "2":
-                        targetCard.eCarCost = ECardCost.c2;
+                        targetCard.eCarCost = ECardCost.C2;
                         break;
                     case "3":
-                        targetCard.eCarCost = ECardCost.c3;
+                        targetCard.eCarCost = ECardCost.C3;
                         break;
                     case "4":
-                        targetCard.eCarCost = ECardCost.c4;
+                        targetCard.eCarCost = ECardCost.C4;
                         break;
                     case "5":
-                        targetCard.eCarCost = ECardCost.c5;
+                        targetCard.eCarCost = ECardCost.C5;
                         break;
                     case "6":
-                        targetCard.eCarCost = ECardCost.c6;
+                        targetCard.eCarCost = ECardCost.C6;
                         break;
                     case "7":
-                        targetCard.eCarCost = ECardCost.c7;
+                        targetCard.eCarCost = ECardCost.C7;
                         break;
                     case "8":
-                        targetCard.eCarCost = ECardCost.c8;
+                        targetCard.eCarCost = ECardCost.C8;
                         break;
                     default:
                         break;
