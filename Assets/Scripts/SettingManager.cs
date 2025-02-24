@@ -17,14 +17,11 @@ public class SettingManager : MonoBehaviour
     [SerializeField]
     GameObject tab3;
 
-    [SerializeField]
-    GameObject notification;
-
-    [SerializeField]
-    Button saveBtn;
 
     [SerializeField]
     GameObject tabMenu;
+
+    
 
 
 
@@ -312,6 +309,7 @@ public class SettingManager : MonoBehaviour
             case "Tab1_Relic":
                 {
                     CardCostChange(tab);
+                    GameObject notification = tab.transform.Find("NotificationPanel").gameObject;
                     notification.transform.Find("NotificationTxt").GetComponent<TMP_Text>().text
                     = $"{relic_cardChoose} of your RELIC card(s) will be {relic_cardCost}, and the rest ({relic_totalCard - relic_cardChoose}) will be randomly generated";
                     notification.SetActive(true);
@@ -321,6 +319,7 @@ public class SettingManager : MonoBehaviour
             case "Tab2_Spell":
                 {
                     CardCostChange(tab);
+                    GameObject notification = tab.transform.Find("NotificationPanel").gameObject;
                     notification.transform.Find("NotificationTxt").GetComponent<TMP_Text>().text
                     = $"{spell_cardChoose} of your SPELL card(s) will be {spell_cardCost}, and the rest ({spell_totalCard - spell_cardChoose}) will be randomly generated";
                     notification.SetActive(true);
@@ -331,6 +330,7 @@ public class SettingManager : MonoBehaviour
             case "Tab3_Gem":
                 {
                     CardCostChange(tab);
+                    GameObject notification = tab.transform.Find("NotificationPanel").gameObject;
                     notification.transform.Find("NotificationTxt").GetComponent<TMP_Text>().text
                     = $"{gem_cardChoose} of your GEM card(s) will be {gem_cardCost}, and the rest ({gem_totalCard - gem_cardChoose}) will be randomly generated";
                     notification.SetActive(true);
@@ -343,26 +343,71 @@ public class SettingManager : MonoBehaviour
 
     }
     // Save buttons and Next buttons doesn't pop up properly in each tab
-    public void btnCancel()
+    public void btnCancel(GameObject tab)
     {
-        notification.SetActive(false);
-        saveBtn.gameObject.SetActive(true);
+        switch (tab.name)
+        {
+            case "Tab1_Relic":
+                {
+                    GameObject notification = tab.transform.Find("NotificationPanel").gameObject;
+                    notification.SetActive(false);
+                    Button saveBtn = tab.transform.Find("SaveBtn").GetComponent<Button>();
+                    saveBtn.gameObject.SetActive(true);
+                }
+                break;
+            case "Tab2_Spell":
+                {
+                    GameObject notification = tab.transform.Find("NotificationPanel").gameObject;
+                    notification.SetActive(false);
+                    Button saveBtn = tab.transform.Find("SaveBtn").GetComponent<Button>();
+                    saveBtn.gameObject.SetActive(true);
+                }
+                break;
+
+            case "Tab3_Gem":
+                {
+                    GameObject notification = tab.transform.Find("NotificationPanel").gameObject;
+                    notification.SetActive(false);
+                    Button saveBtn = tab.transform.Find("SaveBtn").GetComponent<Button>();
+                    saveBtn.gameObject.SetActive(true);
+                }
+                break;
+            default:
+                break;
+        }
+
     }
 
-    public void btnNext()
+    public void btnNext(GameObject tab)
     {
-        if (TabsManager.Inst.currentTabID == 2)
+        switch (tab.name)
         {
-            notification.SetActive(false);
-            tabMenu.SetActive(false);
-        }
-        else
-        {
-            TabsManager.Inst.SwitchToTab(TabsManager.Inst.currentTabID + 1);
-            notification.SetActive(false);
-            saveBtn.gameObject.SetActive(true);
-        }
+            case "Tab1_Relic":
+                {
+                    TabsManager.Inst.SwitchToTab(TabsManager.Inst.currentTabID + 1);
+                    GameObject notification = tab.transform.Find("NotificationPanel").gameObject;
+                    notification.SetActive(false);
+                }
+                break;
+            case "Tab2_Spell":
+                {
+                    TabsManager.Inst.SwitchToTab(TabsManager.Inst.currentTabID + 1);
+                    GameObject notification = tab.transform.Find("NotificationPanel").gameObject;
+                    notification.SetActive(false);
+                }
+                break;
 
+            case "Tab3_Gem":
+                {
+                    GameObject notification = tab.transform.Find("NotificationPanel").gameObject;
+                    notification.SetActive(false);
+                    tabMenu.SetActive(false);
+                    
+                }
+                break;
+            default:
+                break;
+        }
     }
 
 
