@@ -2,9 +2,14 @@ using UnityEngine;
 
 public class Startpanel : MonoBehaviour
 {
-    public void StartGameClick()
+    [SerializeField]
+    GameObject TapMenu;
+        public void StartGameClick()
     {
+
         GameManager.Inst.StartGame();
+        gameObject.SetActive(false);
+        TapMenu.SetActive(true);
         
     }
 

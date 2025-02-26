@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,6 +20,7 @@ public class SettingManager : MonoBehaviour
     [SerializeField]
     GameObject tabMenu;
 
+    
     
 
 
@@ -71,6 +71,8 @@ public class SettingManager : MonoBehaviour
                     relic_check1 = tab.transform.Find("BoostToggleGroup").transform.Find("1.5CheckBox").GetComponent<Toggle>();
                     relic_check2 = tab.transform.Find("BoostToggleGroup").transform.Find("2.0CheckBox").GetComponent<Toggle>();
                     relic_slider = tab.transform.Find("CardNumSlider").GetComponent<Slider>();
+                    relic_totalCard = 2;
+                    relic_cardChoose = 0;
                 }
                 break;
             case "Tab2_Spell":
@@ -78,6 +80,8 @@ public class SettingManager : MonoBehaviour
                     spell_check1 = tab.transform.Find("BoostToggleGroup").transform.Find("1.5CheckBox").GetComponent<Toggle>();
                     spell_check2 = tab.transform.Find("BoostToggleGroup").transform.Find("2.0CheckBox").GetComponent<Toggle>();
                     spell_slider = tab.transform.Find("CardNumSlider").GetComponent<Slider>();
+                    spell_totalCard = 4;
+                    spell_cardChoose = 0;
                 }
                 break;
 
@@ -86,6 +90,8 @@ public class SettingManager : MonoBehaviour
                     gem_check1 = tab.transform.Find("BoostToggleGroup").transform.Find("1.5CheckBox").GetComponent<Toggle>();
                     gem_check2 = tab.transform.Find("BoostToggleGroup").transform.Find("2.0CheckBox").GetComponent<Toggle>();
                     gem_slider = tab.transform.Find("CardNumSlider").GetComponent<Slider>();
+                    gem_totalCard = 3;
+                    gem_cardChoose = 0;
                 }
                 break;
             default:
@@ -334,6 +340,7 @@ public class SettingManager : MonoBehaviour
                     notification.transform.Find("NotificationTxt").GetComponent<TMP_Text>().text
                     = $"{gem_cardChoose} of your GEM card(s) will be {gem_cardCost}, and the rest ({gem_totalCard - gem_cardChoose}) will be randomly generated";
                     notification.SetActive(true);
+                    notification.transform.Find("NextBtn").GetComponentInChildren<TMP_Text>().text = "Shuffle";
                     tab.transform.Find("SaveBtn").gameObject.SetActive(false);
                 }
                 break;
@@ -402,12 +409,18 @@ public class SettingManager : MonoBehaviour
                     GameObject notification = tab.transform.Find("NotificationPanel").gameObject;
                     notification.SetActive(false);
                     tabMenu.SetActive(false);
-                    
+                    DeckManager.Inst.shuffleCardDeck(DeckManager.Inst.relicList,relic_cardCost,relic_totalCard,relic_cardChoose);
+                    //DeckManager.Inst.shuffleCardDeck(DeckManager.Inst.spellList,spell_cardCost,spell_totalCard,spell_cardChoose);
+                    //DeckManager.Inst.shuffleCardDeck(DeckManager.Inst.gemList,gem_cardCost,gem_totalCard,gem_cardChoose);
+                    Debug.Log(DeckManager.Inst.relicList.Count);
+                    //Debug.Log(DeckManager.Inst.spellList.Count);
+                    //Debug.Log(DeckManager.Inst.gemList.Count);
                 }
                 break;
             default:
                 break;
         }
+        
     }
 
 

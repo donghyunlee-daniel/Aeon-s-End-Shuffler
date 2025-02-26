@@ -15,7 +15,8 @@ public class DeckManager : MonoBehaviour
 
 
     // For Card deck
-    List<Item> gemList, spellList, relicList;
+    public List<Item> gemList, spellList, relicList;
+    public List<Item> cardResult;
 
     [SerializeField]
     CardSO cardSO;
@@ -65,18 +66,43 @@ public class DeckManager : MonoBehaviour
         //Able to instantiate  card from prefab. Need to instantiate as many as the size of carlist
     }
 
+    // After use press Shuffle
+    // Shuffle card deck with user input
+    // SHuffleCardDeck needs boostMode, totalCard, cardCost, cardChoose
 
-
-    void shuffleCardDeck(List<Item> deck)
+    public void shuffleCardDeck(List<Item> deck, ECardCost cardCost, int total, int choose)
     {
-        // Randomize the card order
-        for (int i = 0; i < deck.Count; i++)
+        // 1. get guranteed card into the list
+        cardResult = new List<Item>();
+        var temp = deck.FindAll(item => item.eCarCost == cardCost);
+        while(choose >0 && temp.Count >0){
+            int rand = Random.Range(0,temp.Count);
+            string tempStr = temp[rand].name;
+            cardResult.Add(temp[rand]);
+            temp.RemoveAt(rand);
+            deck.Remove(deck.Find(temp => temp.name == tempStr));
+            choose --;
+            total--;
+        };
+
+        // 2. Fill the list with the rest randomly
+        while(total > 0)
         {
-            int rand = Random.Range(i, deck.Count);
-            Item temp = deck[i];
-            deck[i] = deck[rand];
-            deck[rand] = temp;
+            int rand = Random.Range(0,deck.Count);
+            string tempStr = deck[rand].name;
+            cardResult.Add(deck[rand]);
+            deck.Remove(deck.Find(temp => temp.name == tempStr));
+            total --;
         }
+
+        deck = new List<Item>(cardResult);
+        deck.Clear();
+        
+        // 3. Sort the list based on cardCost order
+       //deck = deck.OrderBy(item => item.eCarCost).ToList();
+       Debug.Log("Inside of Deckmanger");
+       Debug.Log(deck.Count);
+       Debug.Log(relicList.Count);
     }
 
     public IEnumerator cardSetUpCo()
@@ -184,12 +210,6 @@ public class DeckManager : MonoBehaviour
             } while (counter < colSize);
             counter = 0;
         }
-        shuffleCardDeck(gemList);
-        shuffleCardDeck(spellList);
-        shuffleCardDeck(relicList);
-        // print(gemList.Count);
-        // print(spellList.Count);
-        // print(relicList.Count);
         GenerateCard();
     }
 

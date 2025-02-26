@@ -11,12 +11,12 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        //UISetup();   
+        UISetup();   
     }
 
     void UISetup()
     {
-        //startPanel.Active(true);
+        startPanel.Active(true);
     }
 
     public void StartGame()
