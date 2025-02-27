@@ -409,18 +409,16 @@ public class SettingManager : MonoBehaviour
                     GameObject notification = tab.transform.Find("NotificationPanel").gameObject;
                     notification.SetActive(false);
                     tabMenu.SetActive(false);
-                    DeckManager.Inst.shuffleCardDeck(DeckManager.Inst.relicList,relic_cardCost,relic_totalCard,relic_cardChoose);
-                    //DeckManager.Inst.shuffleCardDeck(DeckManager.Inst.spellList,spell_cardCost,spell_totalCard,spell_cardChoose);
-                    //DeckManager.Inst.shuffleCardDeck(DeckManager.Inst.gemList,gem_cardCost,gem_totalCard,gem_cardChoose);
-                    Debug.Log(DeckManager.Inst.relicList.Count);
-                    //Debug.Log(DeckManager.Inst.spellList.Count);
-                    //Debug.Log(DeckManager.Inst.gemList.Count);
+                    DeckManager.Inst.relicList = DeckManager.Inst.shuffleCardDeck(DeckManager.Inst.relicList,relic_cardCost,relic_totalCard,relic_cardChoose);
+                    DeckManager.Inst.spellList = DeckManager.Inst.shuffleCardDeck(DeckManager.Inst.spellList,spell_cardCost,spell_totalCard,spell_cardChoose);
+                    DeckManager.Inst.gemList = DeckManager.Inst.shuffleCardDeck(DeckManager.Inst.gemList,gem_cardCost,gem_totalCard,gem_cardChoose);
+                    DeckManager.Inst.GenerateCard(); 
                 }
                 break;
             default:
                 break;
         }
-        
+       
     }
 
 

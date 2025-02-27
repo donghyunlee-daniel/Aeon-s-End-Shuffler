@@ -49,12 +49,16 @@ public class DeckManager : MonoBehaviour
 
 
 
-    void GenerateCard()
+    public void GenerateCard()
     {
+
+        
         // float yVal = 490f;     
 
-        // foreach(var cardItem in cardList)
+        // foreach(var cardItem in relicList)
         // {
+        
+        //     Debug.Log("Here");
         //     var cardObject = cardPrefab.transform.GetChild(0).gameObject;
         //     var rect = cardObject.GetComponent<RectTransform>();
         //     rect.anchoredPosition = new Vector3(0f,yVal,10f);
@@ -70,7 +74,7 @@ public class DeckManager : MonoBehaviour
     // Shuffle card deck with user input
     // SHuffleCardDeck needs boostMode, totalCard, cardCost, cardChoose
 
-    public void shuffleCardDeck(List<Item> deck, ECardCost cardCost, int total, int choose)
+    public List<Item> shuffleCardDeck(List<Item> deck, ECardCost cardCost, int total, int choose)
     {
         // 1. get guranteed card into the list
         cardResult = new List<Item>();
@@ -95,14 +99,10 @@ public class DeckManager : MonoBehaviour
             total --;
         }
 
-        deck = new List<Item>(cardResult);
-        deck.Clear();
         
         // 3. Sort the list based on cardCost order
-       //deck = deck.OrderBy(item => item.eCarCost).ToList();
-       Debug.Log("Inside of Deckmanger");
-       Debug.Log(deck.Count);
-       Debug.Log(relicList.Count);
+       cardResult = cardResult.OrderBy(item => item.eCarCost).ToList();
+       return cardResult;
     }
 
     public IEnumerator cardSetUpCo()
@@ -210,7 +210,6 @@ public class DeckManager : MonoBehaviour
             } while (counter < colSize);
             counter = 0;
         }
-        GenerateCard();
     }
 
 
