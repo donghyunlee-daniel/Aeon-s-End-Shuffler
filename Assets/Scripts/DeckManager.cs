@@ -24,6 +24,9 @@ public class DeckManager : MonoBehaviour
     GameObject cardPrefab;
     public Transform parent;
 
+    [SerializeField]
+    GameObject scrollView;
+
 
     const string URL = "https://docs.google.com/spreadsheets/d/1vTKQfIfWiSmaHZBsgp7q1rVpm4O8NUvD639-jLm60s4/export?format=tsv";
 
@@ -51,22 +54,44 @@ public class DeckManager : MonoBehaviour
 
     public void GenerateCard()
     {
+        scrollView.SetActive(true);
+         
 
-        
-        // float yVal = 490f;     
+        float yVal = 490f;     
 
-        // foreach(var cardItem in relicList)
-        // {
-        
-        //     Debug.Log("Here");
-        //     var cardObject = cardPrefab.transform.GetChild(0).gameObject;
-        //     var rect = cardObject.GetComponent<RectTransform>();
-        //     rect.anchoredPosition = new Vector3(0f,yVal,10f);
-        //     Instantiate(cardObject,parent);
-        //     var card = rect.GetComponent<Card>();
-        //     card.Setup(cardItem);
-        //     yVal -= 75f;
-        // }
+        foreach(var cardItem in relicList)
+        {
+            var cardObject = cardPrefab.transform.GetChild(0).gameObject;
+            var rect = cardObject.GetComponent<RectTransform>();
+            rect.anchoredPosition = new Vector3(0f,yVal,10f);
+            Instantiate(cardObject,parent);
+            var card = rect.GetComponent<Card>();
+            card.Setup(cardItem);
+            yVal -= 75f;
+            Debug.Log(cardItem.name);
+        }
+        foreach(var cardItem in spellList)
+        {
+            var cardObject = cardPrefab.transform.GetChild(0).gameObject;
+            var rect = cardObject.GetComponent<RectTransform>();
+            rect.anchoredPosition = new Vector3(0f,yVal,10f);
+            Instantiate(cardObject,parent);
+            var card = rect.GetComponent<Card>();
+            card.Setup(cardItem);
+            yVal -= 75f;
+            Debug.Log(cardItem.name);
+        }
+        foreach(var cardItem in gemList)
+        {
+            var cardObject = cardPrefab.transform.GetChild(0).gameObject;
+            var rect = cardObject.GetComponent<RectTransform>();
+            rect.anchoredPosition = new Vector3(0f,yVal,10f);
+            Instantiate(cardObject,parent);
+            var card = rect.GetComponent<Card>();
+            card.Setup(cardItem);
+            yVal -= 75f;
+            Debug.Log(cardItem.name);
+        }
         //Able to instantiate  card from prefab. Need to instantiate as many as the size of carlist
     }
 
