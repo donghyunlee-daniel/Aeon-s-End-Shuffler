@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,9 +22,11 @@ public class SettingManager : MonoBehaviour
     [SerializeField]
     GameObject tabMenu;
 
-    
-    
+    [SerializeField]
+    GameObject cardPrefab;
 
+    int relic_unselect = 0;
+    int relic_maxCard = 2;
 
 
 
@@ -307,6 +311,67 @@ public class SettingManager : MonoBehaviour
 
 
     }
+    public void OnMouseClick(GameObject item)
+    {
+        Color32 unSelected = new Color32(246, 78, 78, 255);
+        Color32 selected = new Color32(180, 180, 180, 255);
+        Image imageColor = item.GetComponent<Image>();
+
+
+
+        if (relic_maxCard > relic_unselect)
+        {
+            if (imageColor.color == unSelected)
+            {
+                imageColor.color = selected;
+                relic_unselect--;
+            }
+            else
+            {
+                imageColor.color = unSelected;
+                relic_unselect++;
+            }
+        }
+        else
+        {
+            if (imageColor.color == unSelected)
+            {
+                imageColor.color = selected;
+                relic_unselect--;
+            }
+        }
+
+        if (relic_maxCard == relic_unselect)
+        {
+            GameObject notification = tab1.transform.Find("NotificationPanel").gameObject;
+            Button nextBtn = notification.transform.Find("NextBtn").GetComponent<Button>();
+            nextBtn.enabled = false;
+        }
+        else
+        {
+            GameObject notification = tab1.transform.Find("NotificationPanel").gameObject;
+            Button nextBtn = notification.transform.Find("NextBtn").GetComponent<Button>();
+            nextBtn.enabled = true;
+        }
+
+
+
+    }
+
+    void ShowGeneratedCard(Transform parent, List<Item> deck)
+    {
+        for (int i = 0; i < deck.Count; i++)
+        {
+            var item = Instantiate(cardPrefab);
+            var button = item.AddComponent<Button>();
+            item.transform.Find("nameTxt").GetComponent<TMP_Text>().text = deck[i].name;
+            item.transform.Find("costTxt").GetComponent<TMP_Text>().text = deck[i].eCarCost.ToString();
+            item.transform.Find("typeTxt").GetComponent<TMP_Text>().text = deck[i].eCardType.ToString();
+            item.transform.SetParent(parent);
+            item.transform.localScale = Vector2.one;
+            button.onClick.AddListener(() => OnMouseClick(item));
+        }
+    }
 
     public void btnSave(GameObject tab)
     {
@@ -320,6 +385,14 @@ public class SettingManager : MonoBehaviour
                     = $"{relic_cardChoose} of your RELIC card(s) will be {relic_cardCost}, and the rest ({relic_totalCard - relic_cardChoose}) will be randomly generated";
                     notification.SetActive(true);
                     tab.transform.Find("SaveBtn").gameObject.SetActive(false);
+
+                    notification.transform.Find("NextBtn").GetComponent<Button>().enabled = relic_maxCard == relic_totalCard;
+
+                    DeckManager.Inst.relicList = DeckManager.Inst.shuffleCardDeck(DeckManager.Inst.relicList, relic_cardCost, relic_totalCard, relic_cardChoose);
+                    GameObject scrollView = tab.transform.Find("Scroll View").gameObject;
+                    Transform parent = scrollView.GetComponentInChildren<VerticalLayoutGroup>().GetComponent<Transform>();
+                    ShowGeneratedCard(parent, DeckManager.Inst.relicList);
+                    scrollView.SetActive(true);
                 }
                 break;
             case "Tab2_Spell":
@@ -393,7 +466,18 @@ public class SettingManager : MonoBehaviour
                 {
                     TabsManager.Inst.SwitchToTab(TabsManager.Inst.currentTabID + 1);
                     GameObject notification = tab.transform.Find("NotificationPanel").gameObject;
+                    GameObject content = tab.transform.Find("Scroll View").GetComponentInChildren<VerticalLayoutGroup>().gameObject;
                     notification.SetActive(false);
+                    Image[] imgArray = content.GetComponentsInChildren<Image>();
+
+                    foreach (var item in imgArray)
+                    {
+                        if (item.color == new Color32(246, 78, 78, 255))
+                        {
+                            String itemName = item.transform.Find("nameTxt").GetComponent<TMP_Text>().text;
+                            DeckManager.Inst.relicList.Remove(DeckManager.Inst.relicList.Find(temp => temp.name == itemName));
+                        }
+                    }
                 }
                 break;
             case "Tab2_Spell":
@@ -409,16 +493,16 @@ public class SettingManager : MonoBehaviour
                     GameObject notification = tab.transform.Find("NotificationPanel").gameObject;
                     notification.SetActive(false);
                     tabMenu.SetActive(false);
-                    DeckManager.Inst.relicList = DeckManager.Inst.shuffleCardDeck(DeckManager.Inst.relicList,relic_cardCost,relic_totalCard,relic_cardChoose);
-                    DeckManager.Inst.spellList = DeckManager.Inst.shuffleCardDeck(DeckManager.Inst.spellList,spell_cardCost,spell_totalCard,spell_cardChoose);
-                    DeckManager.Inst.gemList = DeckManager.Inst.shuffleCardDeck(DeckManager.Inst.gemList,gem_cardCost,gem_totalCard,gem_cardChoose);
-                    DeckManager.Inst.GenerateCard(); 
+
+                    DeckManager.Inst.spellList = DeckManager.Inst.shuffleCardDeck(DeckManager.Inst.spellList, spell_cardCost, spell_totalCard, spell_cardChoose);
+                    DeckManager.Inst.gemList = DeckManager.Inst.shuffleCardDeck(DeckManager.Inst.gemList, gem_cardCost, gem_totalCard, gem_cardChoose);
+                    DeckManager.Inst.GenerateCard();
                 }
                 break;
             default:
                 break;
         }
-       
+
     }
 
 

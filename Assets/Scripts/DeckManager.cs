@@ -22,6 +22,8 @@ public class DeckManager : MonoBehaviour
     CardSO cardSO;
     [SerializeField]
     GameObject cardPrefab;
+
+    [SerializeField]
     public Transform parent;
 
     [SerializeField]
@@ -55,44 +57,34 @@ public class DeckManager : MonoBehaviour
     public void GenerateCard()
     {
         scrollView.SetActive(true);
-         
-
-        float yVal = 490f;     
-
-        foreach(var cardItem in relicList)
+        for(int i =0; i <relicList.Count; i++)
         {
-            var cardObject = cardPrefab.transform.GetChild(0).gameObject;
-            var rect = cardObject.GetComponent<RectTransform>();
-            rect.anchoredPosition = new Vector3(0f,yVal,10f);
-            Instantiate(cardObject,parent);
-            var card = rect.GetComponent<Card>();
-            card.Setup(cardItem);
-            yVal -= 75f;
-            Debug.Log(cardItem.name);
+            var item = Instantiate(cardPrefab);
+            item.transform.Find("nameTxt").GetComponent<TMP_Text>().text = relicList[i].name;
+            item.transform.Find("costTxt").GetComponent<TMP_Text>().text = relicList[i].eCarCost.ToString();
+            item.transform.Find("typeTxt").GetComponent<TMP_Text>().text = relicList[i].eCardType.ToString();
+            item.transform.SetParent(parent);
+            item.transform.localScale = Vector2.one;
         }
-        foreach(var cardItem in spellList)
+        for(int i =0; i <spellList.Count; i++)
         {
-            var cardObject = cardPrefab.transform.GetChild(0).gameObject;
-            var rect = cardObject.GetComponent<RectTransform>();
-            rect.anchoredPosition = new Vector3(0f,yVal,10f);
-            Instantiate(cardObject,parent);
-            var card = rect.GetComponent<Card>();
-            card.Setup(cardItem);
-            yVal -= 75f;
-            Debug.Log(cardItem.name);
+            var item = Instantiate(cardPrefab);
+            item.transform.Find("nameTxt").GetComponent<TMP_Text>().text = spellList[i].name;
+            item.transform.Find("costTxt").GetComponent<TMP_Text>().text = spellList[i].eCarCost.ToString();
+            item.transform.Find("typeTxt").GetComponent<TMP_Text>().text = spellList[i].eCardType.ToString();
+            item.transform.SetParent(parent);
+            item.transform.localScale = Vector2.one;
         }
-        foreach(var cardItem in gemList)
+        for(int i =0; i <gemList.Count; i++)
         {
-            var cardObject = cardPrefab.transform.GetChild(0).gameObject;
-            var rect = cardObject.GetComponent<RectTransform>();
-            rect.anchoredPosition = new Vector3(0f,yVal,10f);
-            Instantiate(cardObject,parent);
-            var card = rect.GetComponent<Card>();
-            card.Setup(cardItem);
-            yVal -= 75f;
-            Debug.Log(cardItem.name);
+            var item = Instantiate(cardPrefab);
+            item.transform.Find("nameTxt").GetComponent<TMP_Text>().text = gemList[i].name;
+            item.transform.Find("costTxt").GetComponent<TMP_Text>().text = gemList[i].eCarCost.ToString();
+            item.transform.Find("typeTxt").GetComponent<TMP_Text>().text = gemList[i].eCardType.ToString();
+            item.transform.SetParent(parent);
+            item.transform.localScale = Vector2.one;
         }
-        //Able to instantiate  card from prefab. Need to instantiate as many as the size of carlist
+        
     }
 
     // After use press Shuffle
@@ -124,9 +116,11 @@ public class DeckManager : MonoBehaviour
             total --;
         }
 
+       
         
         // 3. Sort the list based on cardCost order
        cardResult = cardResult.OrderBy(item => item.eCarCost).ToList();
+       
        return cardResult;
     }
 
