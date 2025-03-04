@@ -26,7 +26,7 @@ public class SettingManager : MonoBehaviour
     GameObject cardPrefab;
 
     int relic_unselect = 0;
-    int relic_maxCard = 2;
+    int relic_maxCard = 2, spell_maxCard = 4, gem_maxCard =3;
 
 
 
@@ -41,6 +41,7 @@ public class SettingManager : MonoBehaviour
 
     Toggle relic_check1, relic_check2, spell_check1, spell_check2, gem_check1, gem_check2;
     Slider relic_slider, spell_slider, gem_slider;
+    Button relicNextBtn, spellNextBtn, gemNextBtn;
 
     void Awake()
     {
@@ -77,6 +78,7 @@ public class SettingManager : MonoBehaviour
                     relic_slider = tab.transform.Find("CardNumSlider").GetComponent<Slider>();
                     relic_totalCard = 2;
                     relic_cardChoose = 0;
+                    relicNextBtn = tab.transform.Find("NotificationPanel").transform.Find("NextBtn").GetComponent<Button>();
                 }
                 break;
             case "Tab2_Spell":
@@ -86,6 +88,7 @@ public class SettingManager : MonoBehaviour
                     spell_slider = tab.transform.Find("CardNumSlider").GetComponent<Slider>();
                     spell_totalCard = 4;
                     spell_cardChoose = 0;
+                    spellNextBtn = tab.transform.Find("NotificationPanel").transform.Find("NextBtn").GetComponent<Button>();
                 }
                 break;
 
@@ -96,6 +99,7 @@ public class SettingManager : MonoBehaviour
                     gem_slider = tab.transform.Find("CardNumSlider").GetComponent<Slider>();
                     gem_totalCard = 3;
                     gem_cardChoose = 0;
+                    gemNextBtn = tab.transform.Find("NotificationPanel").transform.Find("NextBtn").GetComponent<Button>();
                 }
                 break;
             default:
@@ -133,6 +137,7 @@ public class SettingManager : MonoBehaviour
                         relic_slider.maxValue = relic_totalCard;
                         tab.transform.Find("TotalCardNum_val").GetComponent<TMP_Text>().text = relic_totalCard.ToString();
                     }
+                    relicNextBtn.enabled = relic_totalCard == relic_maxCard ? true : false;
                 }
                 break;
             case "Tab2_Spell":
@@ -160,6 +165,7 @@ public class SettingManager : MonoBehaviour
                         spell_slider.maxValue = spell_totalCard;
                         tab.transform.Find("TotalCardNum_val").GetComponent<TMP_Text>().text = spell_totalCard.ToString();
                     }
+                    spellNextBtn.enabled = spell_totalCard == spell_maxCard ? true : false;
                 }
                 break;
 
@@ -188,6 +194,7 @@ public class SettingManager : MonoBehaviour
                         gem_slider.maxValue = gem_totalCard;
                         tab.transform.Find("TotalCardNum_val").GetComponent<TMP_Text>().text = gem_totalCard.ToString();
                     }
+                    gemNextBtn.enabled = gem_totalCard == gem_maxCard ? true : false;
                 }
                 break;
             default:
@@ -203,6 +210,9 @@ public class SettingManager : MonoBehaviour
 
 
     }
+
+    
+    
 
     public void SliderChange(GameObject tab)
     {
@@ -313,49 +323,35 @@ public class SettingManager : MonoBehaviour
     }
     public void OnMouseClick(GameObject item)
     {
-        Color32 unSelected = new Color32(246, 78, 78, 255);
-        Color32 selected = new Color32(180, 180, 180, 255);
+        Color32 redCol = new Color32(246, 78, 78, 255);
+        Color32 grayCol = new Color32(180, 180, 180, 255);
         Image imageColor = item.GetComponent<Image>();
-
-
 
         if (relic_maxCard > relic_unselect)
         {
-            if (imageColor.color == unSelected)
+            if (imageColor.color == redCol)
             {
-                imageColor.color = selected;
+                imageColor.color = grayCol;
                 relic_unselect--;
             }
             else
             {
-                imageColor.color = unSelected;
+                imageColor.color = redCol;
                 relic_unselect++;
             }
         }
         else
         {
-            if (imageColor.color == unSelected)
+            if (imageColor.color == redCol)
             {
-                imageColor.color = selected;
+                imageColor.color = grayCol;
                 relic_unselect--;
             }
         }
-
-        if (relic_maxCard == relic_unselect)
+        if(relic_maxCard == relic_totalCard - relic_unselect)
         {
-            GameObject notification = tab1.transform.Find("NotificationPanel").gameObject;
-            Button nextBtn = notification.transform.Find("NextBtn").GetComponent<Button>();
-            nextBtn.enabled = false;
+            relicNextBtn.enabled = true;
         }
-        else
-        {
-            GameObject notification = tab1.transform.Find("NotificationPanel").gameObject;
-            Button nextBtn = notification.transform.Find("NextBtn").GetComponent<Button>();
-            nextBtn.enabled = true;
-        }
-
-
-
     }
 
     void ShowGeneratedCard(Transform parent, List<Item> deck)
