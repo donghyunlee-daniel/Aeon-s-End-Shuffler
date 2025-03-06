@@ -39,21 +39,7 @@ public class DeckManager : MonoBehaviour
         cardSO.cards = null;
     }
 
-    // Prompt users to choose cards each list (gems, spells, relics)
-    // UI pops up and select cards
-    // At the final UI, show users selected cards
-    // Needed for panel. 
-    
-    // TabView is needed
-
-    // Checkbox for boost mode (1.5 / 2.0)
-    // Boost mode for card Cost
-    // Input for the number of fixed card
-    // 
-
-
-
-
+   
     public void GenerateCard()
     {
         scrollView.SetActive(true);

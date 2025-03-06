@@ -25,8 +25,8 @@ public class SettingManager : MonoBehaviour
     [SerializeField]
     GameObject cardPrefab;
 
-    int relic_unselect = 0;
-    int relic_maxCard = 2, spell_maxCard = 4, gem_maxCard =3;
+    int relic_unselect = 0, spell_unselect = 0, gem_unselect = 0;
+    int relic_maxCard = 2, spell_maxCard = 4, gem_maxCard = 3;
 
 
 
@@ -211,8 +211,8 @@ public class SettingManager : MonoBehaviour
 
     }
 
-    
-    
+
+
 
     public void SliderChange(GameObject tab)
     {
@@ -321,52 +321,175 @@ public class SettingManager : MonoBehaviour
 
 
     }
-    public void OnMouseClick(GameObject item)
+    public void OnMouseClick(GameObject item, GameObject tab)
     {
         Color32 redCol = new Color32(246, 78, 78, 255);
         Color32 grayCol = new Color32(180, 180, 180, 255);
         Image imageColor = item.GetComponent<Image>();
 
-        if (relic_maxCard > relic_unselect)
+        switch (tab.name)
         {
-            if (imageColor.color == redCol)
-            {
-                imageColor.color = grayCol;
-                relic_unselect--;
-            }
-            else
-            {
-                imageColor.color = redCol;
-                relic_unselect++;
-            }
+            case "Tab1_Relic":
+                if (relic_maxCard != relic_totalCard-relic_unselect)
+                {
+                    if (imageColor.color == redCol)
+                    {
+                        imageColor.color = grayCol;
+                        relic_unselect--;
+                    }
+                    else
+                    {
+                        imageColor.color = redCol;
+                        relic_unselect++;
+                    }
+                }
+                else
+                {
+                    if (imageColor.color == redCol)
+                    {
+                        imageColor.color = grayCol;
+                        relic_unselect--;
+                    }
+                }
+                if (relic_maxCard == relic_totalCard - relic_unselect)
+                {
+                    relicNextBtn.enabled = true;
+                    relicNextBtn.gameObject.GetComponent<Image>().color = new Color32(10, 36, 217, 255);
+                }
+                else
+                {
+                    relicNextBtn.enabled = false;
+                    relicNextBtn.gameObject.GetComponent<Image>().color = new Color32(87, 100, 190, 255);
+                }
+                break;
+            case "Tab2_Spell":
+                if (spell_maxCard != spell_totalCard-spell_unselect)
+                {
+                    if (imageColor.color == redCol)
+                    {
+                        imageColor.color = grayCol;
+                        spell_unselect--;
+                    }
+                    else
+                    {
+                        imageColor.color = redCol;
+                        spell_unselect++;
+                    }
+                }
+                else
+                {
+                    if (imageColor.color == redCol)
+                    {
+                        imageColor.color = grayCol;
+                        spell_unselect--;
+                    }
+                }
+                if (spell_maxCard == spell_totalCard - spell_unselect)
+                {
+                    spellNextBtn.enabled = true;
+                    spellNextBtn.gameObject.GetComponent<Image>().color = new Color32(10, 36, 217, 255);
+                }
+                else
+                {
+                    spellNextBtn.enabled = false;
+                    spellNextBtn.gameObject.GetComponent<Image>().color = new Color32(87, 100, 190, 255);
+                }
+                break;
+
+            case "Tab3_Gem":
+                if (gem_maxCard != gem_totalCard-gem_unselect)
+                {
+                    if (imageColor.color == redCol)
+                    {
+                        imageColor.color = grayCol;
+                        gem_unselect--;
+                    }
+                    else
+                    {
+                        imageColor.color = redCol;
+                        gem_unselect++;
+                    }
+                }
+                else
+                {
+                    if (imageColor.color == redCol)
+                    {
+                        imageColor.color = grayCol;
+                        gem_unselect--;
+                    }
+                }
+                if (gem_maxCard == gem_totalCard - gem_unselect)
+                {
+                    gemNextBtn.enabled = true;
+                    gemNextBtn.gameObject.GetComponent<Image>().color = new Color32(10, 36, 217, 255);
+                }
+                else
+                {
+                    gemNextBtn.enabled = false;
+                    gemNextBtn.gameObject.GetComponent<Image>().color = new Color32(87, 100, 190, 255);
+                }
+                break;
+            default:
+                break;
         }
-        else
-        {
-            if (imageColor.color == redCol)
-            {
-                imageColor.color = grayCol;
-                relic_unselect--;
-            }
-        }
-        if(relic_maxCard == relic_totalCard - relic_unselect)
-        {
-            relicNextBtn.enabled = true;
-        }
+
+
     }
 
-    void ShowGeneratedCard(Transform parent, List<Item> deck)
+    void ShowGeneratedCard(Transform parent, List<Item> deck, GameObject tab)
     {
-        for (int i = 0; i < deck.Count; i++)
+        switch (tab.name)
         {
-            var item = Instantiate(cardPrefab);
-            var button = item.AddComponent<Button>();
-            item.transform.Find("nameTxt").GetComponent<TMP_Text>().text = deck[i].name;
-            item.transform.Find("costTxt").GetComponent<TMP_Text>().text = deck[i].eCarCost.ToString();
-            item.transform.Find("typeTxt").GetComponent<TMP_Text>().text = deck[i].eCardType.ToString();
-            item.transform.SetParent(parent);
-            item.transform.localScale = Vector2.one;
-            button.onClick.AddListener(() => OnMouseClick(item));
+            case "Tab1_Relic":
+                {
+                    for (int i = 0; i < deck.Count; i++)
+                    {
+                        var item = Instantiate(cardPrefab);
+                        var button = item.AddComponent<Button>();
+                        item.transform.Find("nameTxt").GetComponent<TMP_Text>().text = deck[i].name;
+                        item.transform.Find("costTxt").GetComponent<TMP_Text>().text = deck[i].eCarCost.ToString();
+                        item.transform.Find("typeTxt").GetComponent<TMP_Text>().text = deck[i].eCardType.ToString();
+                        item.transform.SetParent(parent);
+                        item.transform.localScale = Vector2.one;
+                        button.onClick.AddListener(() => OnMouseClick(item, tab));
+                    }
+                }
+                break;
+            case "Tab2_Spell":
+                {
+                    for (int i = 0; i < deck.Count; i++)
+                    {
+                        var item = Instantiate(cardPrefab);
+                        var button = item.AddComponent<Button>();
+                        item.transform.Find("nameTxt").GetComponent<TMP_Text>().text = deck[i].name;
+                        item.transform.Find("costTxt").GetComponent<TMP_Text>().text = deck[i].eCarCost.ToString();
+                        item.transform.Find("typeTxt").GetComponent<TMP_Text>().text = deck[i].eCardType.ToString();
+                        item.transform.SetParent(parent);
+                        item.transform.localScale = Vector2.one;
+                        button.onClick.AddListener(() => OnMouseClick(item, tab));
+                    }
+                }
+                break;
+
+            case "Tab3_Gem":
+                {
+                    for (int i = 0; i < deck.Count; i++)
+                    {
+                        var item = Instantiate(cardPrefab);
+                        var button = item.AddComponent<Button>();
+                        item.transform.Find("nameTxt").GetComponent<TMP_Text>().text = deck[i].name;
+                        item.transform.Find("costTxt").GetComponent<TMP_Text>().text = deck[i].eCarCost.ToString();
+                        item.transform.Find("typeTxt").GetComponent<TMP_Text>().text = deck[i].eCardType.ToString();
+                        item.transform.SetParent(parent);
+                        item.transform.localScale = Vector2.one;
+                        button.onClick.AddListener(() => OnMouseClick(item, tab));
+                    }
+                }
+                break;
+            default:
+                break;
         }
+
     }
 
     public void btnSave(GameObject tab)
@@ -382,12 +505,11 @@ public class SettingManager : MonoBehaviour
                     notification.SetActive(true);
                     tab.transform.Find("SaveBtn").gameObject.SetActive(false);
 
-                    notification.transform.Find("NextBtn").GetComponent<Button>().enabled = relic_maxCard == relic_totalCard;
 
                     DeckManager.Inst.relicList = DeckManager.Inst.shuffleCardDeck(DeckManager.Inst.relicList, relic_cardCost, relic_totalCard, relic_cardChoose);
                     GameObject scrollView = tab.transform.Find("Scroll View").gameObject;
                     Transform parent = scrollView.GetComponentInChildren<VerticalLayoutGroup>().GetComponent<Transform>();
-                    ShowGeneratedCard(parent, DeckManager.Inst.relicList);
+                    ShowGeneratedCard(parent, DeckManager.Inst.relicList, tab);
                     scrollView.SetActive(true);
                 }
                 break;
@@ -399,6 +521,12 @@ public class SettingManager : MonoBehaviour
                     = $"{spell_cardChoose} of your SPELL card(s) will be {spell_cardCost}, and the rest ({spell_totalCard - spell_cardChoose}) will be randomly generated";
                     notification.SetActive(true);
                     tab.transform.Find("SaveBtn").gameObject.SetActive(false);
+                    
+                    DeckManager.Inst.spellList = DeckManager.Inst.shuffleCardDeck(DeckManager.Inst.spellList, spell_cardCost, spell_totalCard, spell_cardChoose);
+                    GameObject scrollView = tab.transform.Find("Scroll View").gameObject;
+                    Transform parent = scrollView.GetComponentInChildren<VerticalLayoutGroup>().GetComponent<Transform>();
+                    ShowGeneratedCard(parent, DeckManager.Inst.spellList, tab);
+                    scrollView.SetActive(true);
                 }
                 break;
 
@@ -411,6 +539,12 @@ public class SettingManager : MonoBehaviour
                     notification.SetActive(true);
                     notification.transform.Find("NextBtn").GetComponentInChildren<TMP_Text>().text = "Shuffle";
                     tab.transform.Find("SaveBtn").gameObject.SetActive(false);
+
+                    DeckManager.Inst.gemList = DeckManager.Inst.shuffleCardDeck(DeckManager.Inst.gemList, gem_cardCost, gem_totalCard, gem_cardChoose);
+                    GameObject scrollView = tab.transform.Find("Scroll View").gameObject;
+                    Transform parent = scrollView.GetComponentInChildren<VerticalLayoutGroup>().GetComponent<Transform>();
+                    ShowGeneratedCard(parent, DeckManager.Inst.gemList, tab);
+                    scrollView.SetActive(true);
                 }
                 break;
             default:
@@ -465,33 +599,58 @@ public class SettingManager : MonoBehaviour
                     GameObject content = tab.transform.Find("Scroll View").GetComponentInChildren<VerticalLayoutGroup>().gameObject;
                     notification.SetActive(false);
                     Image[] imgArray = content.GetComponentsInChildren<Image>();
-
+                    
                     foreach (var item in imgArray)
                     {
                         if (item.color == new Color32(246, 78, 78, 255))
                         {
-                            String itemName = item.transform.Find("nameTxt").GetComponent<TMP_Text>().text;
+                            string itemName = item.transform.Find("nameTxt").GetComponent<TMP_Text>().text;
                             DeckManager.Inst.relicList.Remove(DeckManager.Inst.relicList.Find(temp => temp.name == itemName));
                         }
                     }
+                    
                 }
                 break;
             case "Tab2_Spell":
                 {
                     TabsManager.Inst.SwitchToTab(TabsManager.Inst.currentTabID + 1);
                     GameObject notification = tab.transform.Find("NotificationPanel").gameObject;
+                    GameObject content = tab.transform.Find("Scroll View").GetComponentInChildren<VerticalLayoutGroup>().gameObject;
+
                     notification.SetActive(false);
+                    Image[] imgArray = content.GetComponentsInChildren<Image>();
+                    
+                    foreach (var item in imgArray)
+                    {
+                        if (item.color == new Color32(246, 78, 78, 255))
+                        {
+                            string itemName = item.transform.Find("nameTxt").GetComponent<TMP_Text>().text;
+                            DeckManager.Inst.spellList.Remove(DeckManager.Inst.spellList.Find(temp => temp.name == itemName));
+                        }
+                    }
+                    
                 }
                 break;
 
             case "Tab3_Gem":
                 {
                     GameObject notification = tab.transform.Find("NotificationPanel").gameObject;
+                    GameObject content = tab.transform.Find("Scroll View").GetComponentInChildren<VerticalLayoutGroup>().gameObject;
+
                     notification.SetActive(false);
                     tabMenu.SetActive(false);
+                    Image[] imgArray = content.GetComponentsInChildren<Image>();
+                    
+                    foreach (var item in imgArray)
+                    {
+                        if (item.color == new Color32(246, 78, 78, 255))
+                        {
+                            string itemName = item.transform.Find("nameTxt").GetComponent<TMP_Text>().text;
+                            DeckManager.Inst.gemList.Remove(DeckManager.Inst.gemList.Find(temp => temp.name == itemName));
+                        }
+                    }
 
-                    DeckManager.Inst.spellList = DeckManager.Inst.shuffleCardDeck(DeckManager.Inst.spellList, spell_cardCost, spell_totalCard, spell_cardChoose);
-                    DeckManager.Inst.gemList = DeckManager.Inst.shuffleCardDeck(DeckManager.Inst.gemList, gem_cardCost, gem_totalCard, gem_cardChoose);
+                    
                     DeckManager.Inst.GenerateCard();
                 }
                 break;
