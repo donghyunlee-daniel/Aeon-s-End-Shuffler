@@ -35,3 +35,14 @@
 
  ## Needs to be improved
  - When cardcost is clicked, card choose should be default to 1
+
+ ## Preview
+ ![image](https://github.com/user-attachments/assets/ec88449a-1118-4510-a719-207c1c8131e8)
+ ![image](https://github.com/user-attachments/assets/a2152a9d-3507-40ef-bc93-bf31c10e18e7)
+ ![image](https://github.com/user-attachments/assets/6ed5295f-120a-4c4f-a5cd-de738f63b3d0)
+ ![image](https://github.com/user-attachments/assets/44fd5bbf-a38f-4dea-b2c5-6254d2e32fa5)
+
+
+
+ 
+
